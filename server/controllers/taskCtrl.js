@@ -52,7 +52,7 @@ class TaskCtrl {
       const data = await Task.destroy({
         where: { id: req.params.id }
       })
-      res.status(200).json({ task: data })
+      res.status(200).json({ msg: 'task deleted' })
     } catch(err) {
       next(err)
     }

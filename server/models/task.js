@@ -31,14 +31,10 @@ module.exports = (sequelize, DataTypes) => {
     description: DataTypes.STRING(1234),
     category: {
       type: DataTypes.STRING,
-      allowNull: false,
       validate: {
         notEmpty: {
           args: true,
           msg: 'Category cannot be empty'
-        },
-        notNull: {
-          msg: 'Category is required'
         }
       }
     },
