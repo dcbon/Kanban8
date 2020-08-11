@@ -44,6 +44,7 @@ module.exports = (sequelize, DataTypes) => {
     hooks: {
       beforeCreate: (task, opt) => {
         if (!task.description) task.description = 'No Description'
+        if (!task.category) task.category = 'Backlog'
       }
     },
     modelName: 'Task',
