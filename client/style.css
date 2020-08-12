@@ -14,6 +14,18 @@
   background-color: #2a363b !important;
 }
 
+small a,
+small a:link, 
+small a:visited, 
+small a:active {
+  text-decoration: none !important;
+}
+
+small a:hover {
+  text-decoration: none !important;
+  color: #ff847c !important;
+  cursor: pointer;
+}
 
 .btn-red {
   background-color: #e84a5f;

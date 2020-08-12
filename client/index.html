@@ -27,15 +27,27 @@
                   <small class="text-muted text-center">Register</small>
                 </span>
               </h2>
-              <form>
+              <form id="register-form" @submit.prevent="register">
                 <div class="mb-3">
-                  <input type="email" class="form-control" id="register-email" placeholder="Email address">
+                  <input 
+                    type="email" 
+                    class="form-control" 
+                    id="register-email" 
+                    placeholder="Email address"
+                    v-model="email"
+                  >
                 </div>
                 <div class="mb-3">
-                  <input type="password" class="form-control" id="register-password" placeholder="Password">
+                  <input 
+                    type="password" 
+                    class="form-control" 
+                    id="register-password" 
+                    placeholder="Password"
+                    v-model="password"
+                  >
                 </div>
                 <button type="submit" class="btn btn-red btn-block mb-1 text-light">Sign Up</button>
-                <small id="emailHelp" class="form-text text-muted">Already have an account? <a onclick="showLogin(event)">Login here.</a></small>
+                <small id="emailHelp" class="form-text text-muted">Already have an account? <a href="" @click.prevent="page = 'login'">Login here.</a></small>
               </form>
             </div>
           </div>
@@ -76,7 +88,8 @@
                   >
                 </div>
                 <button type="submit" class="btn btn-red btn-block mb-1 text-light">Sign In</button>
-                <small id="emailHelp" class="form-text text-muted">Didn't have an account? <a onclick="showLogin(event)">Register here.</a></small>
+                <div class="g-signin2" data-onsuccess="onSignIn"></div>
+                <small id="emailHelp" class="form-text text-muted">Didn't have an account? <a class="txt-red" @click.prevent="page = 'register'">Register here.</a></small>
               </form>
             </div>
           </div>
@@ -90,42 +103,54 @@
         <div class="text-c-1">
           <h1 class="p-3"><b>Kanban Board</b>
             <span class="float-right">
-              <button class="btn btn-red text-light" type="submit">Sign Out</button>
+              <button class="btn btn-red text-light" type="submit" @click="logout">Sign Out</button>
             </span>
           </h1>
           <h5 class="border-btm p-3">August 2020</h5>
         </div>
         <div class="col-3">
-          <div>
+          <div class="justify-content-between">
             <h5 class="badge bg-secondary backlog">Backlog
               <span class="badge bg-secondary">3</span>
             </h5>
-            <span><a href="" class="btn float-right far fa-plus mr-2 txt-red"></a></span>
+            <span>
+              <a 
+                href="" 
+                class="btn float-right far fa-plus mr-2 txt-red"
+                data-toggle="modal" 
+                data-target="#addModal"
+              >
+              </a>
+            </span>
           </div>
           <div class="mt-2 overflow-auto">
-            <div class="card mb-3 shadow m-1" draggable="true">
+            <div 
+              class="card mb-3 shadow m-1"
+              v-for="task in tasks"
+              :key="task.id"
+            >
               <div class="card-body">
-                <h5 class="card-title txt-red">Apa kek gitu
+                <h5 class="card-title txt-red">{{ task.title }}
                   <span class="dropdown">
                     <a class="bg-custom fas fa-ellipsis-v float-right btn" role="button" id="menu" data-toggle="dropdown" aria-expanded="false"></a>
   
                     <ul class="dropdown-menu" aria-labelledby="menu">
-                      <li><a class="dropdown-item" href="#"><span class="fas fa-edit mr-2"></span>Edit</a></li>
-                      <li><a class="dropdown-item" href="#"><span class="fas fa-trash mr-2"></span>Remove</a></li>
+                      <li><a class="dropdown-item" href="#"><span class="fas fa-edit mr-2" data-toggle="modal" data-target="#editModal"></span>Edit</a></li>
+                      <!-- <li><a class="dropdown-item" href="#"><span class="fas fa-trash mr-2" :click.prevent="deleteTask(`${task.id}`)"></span>Remove</a></li> -->
                     </ul>
                   </span>
                 </h5>
-                <p class="card-text">apa lagi ini</p>
+                <p class="card-text">{{ task.description }}</p>
                 <div class="justify-content-around profile">
-                  <img class="img-fluid avt float-left p-1" src="https://avatars.dicebear.com/api/female/admin.svg" alt="">
+                  <img class="img-fluid avt float-left p-1" :src="`https://avatars.dicebear.com/api/human/${task.UserId.email}.svg`" alt="">
                   <small class="bg-custom float-left text-mutedml-1">
-                    admin@mail.com <br>
-                    Hacktiv8
+                    {{task.UserId.email}} <br>
+                    {{task.UserId.organization}}
                   </small>
                 </div>
               </div>
             </div>
-            <div class="card mb-2 shadow m-1" draggable="true">
+            <!-- <div class="card mb-2 shadow m-1">
               <div class="card-body">
                 <h5 class="card-title">Apa kek gitu
                   <span class="dropdown">
@@ -146,7 +171,7 @@
                   </small>
                 </div>
               </div>
-            </div>
+            </div> -->
           </div>
         </div>
         <div class="col-3">
@@ -157,9 +182,9 @@
             <span><a href="" class="btn float-right far fa-plus mr-2 txt-org"></a></span>
           </div>
           <div class="mt-2 overflow-auto">
-            <div class="card mb-3 shadow m-1" draggable="true">
+            <div class="card mb-3 shadow m-1">
               <div class="card-body">
-                <h5 class="card-title txt-red">Apa kek gitu
+                <h5 class="card-title txt-org">Apa kek gitu
                   <span class="dropdown">
                     <a class="bg-custom fas fa-ellipsis-v float-right btn" role="button" id="menu" data-toggle="dropdown" aria-expanded="false"></a>
   
@@ -179,9 +204,9 @@
                 </div>
               </div>
             </div>
-            <div class="card mb-2 shadow m-1" draggable="true">
+            <div class="card mb-2 shadow m-1">
               <div class="card-body">
-                <h5 class="card-title">Apa kek gitu
+                <h5 class="card-title txt-org">Apa kek gitu
                   <span class="dropdown">
                     <a class="fas fa-ellipsis-v float-right btn" role="button" id="menu" data-toggle="dropdown" aria-expanded="false"></a>
   
@@ -211,9 +236,9 @@
             <span><a href="" class="btn float-right far fa-plus mr-2 txt-crm"></a></span>
           </div>
           <div class="mt-2 overflow-auto">
-            <div class="card mb-3 shadow m-1" draggable="true">
+            <div class="card mb-3 shadow m-1">
               <div class="card-body">
-                <h5 class="card-title txt-red">Apa kek gitu
+                <h5 class="card-title txt-crm">Apa kek gitu
                   <span class="dropdown">
                     <a class="bg-custom fas fa-ellipsis-v float-right btn" role="button" id="menu" data-toggle="dropdown" aria-expanded="false"></a>
   
@@ -233,9 +258,9 @@
                 </div>
               </div>
             </div>
-            <div class="card mb-2 shadow m-1" draggable="true">
+            <div class="card mb-2 shadow m-1">
               <div class="card-body">
-                <h5 class="card-title">Apa kek gitu
+                <h5 class="card-title txt-crm">Apa kek gitu
                   <span class="dropdown">
                     <a class="fas fa-ellipsis-v float-right btn" role="button" id="menu" data-toggle="dropdown" aria-expanded="false"></a>
   
@@ -265,9 +290,9 @@
             <span><a href="" class="btn float-right far fa-plus mr-2 txt-grn"></a></span>
           </div>
           <div class="mt-2 overflow-auto">
-            <div class="card mb-3 shadow m-1" draggable="true">
+            <div class="card mb-3 shadow m-1">
               <div class="card-body">
-                <h5 class="card-title txt-red">Apa kek gitu
+                <h5 class="card-title txt-grn">Apa kek gitu
                   <span class="dropdown">
                     <a class="bg-custom fas fa-ellipsis-v float-right btn" role="button" id="menu" data-toggle="dropdown" aria-expanded="false"></a>
   
@@ -287,9 +312,9 @@
                 </div>
               </div>
             </div>
-            <div class="card mb-2 shadow m-1" draggable="true">
+            <div class="card mb-2 shadow m-1">
               <div class="card-body">
-                <h5 class="card-title">Apa kek gitu
+                <h5 class="card-title txt-grn">Apa kek gitu
                   <span class="dropdown">
                     <a class="fas fa-ellipsis-v float-right btn" role="button" id="menu" data-toggle="dropdown" aria-expanded="false"></a>
   
@@ -314,12 +339,12 @@
       </div>
 
       
-      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addModal">
+      <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addModal">
         add modal demo
-      </button>
-      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editModal">
+      </button> -->
+      <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editModal">
         edit modal demo
-      </button>
+      </button> -->
 
     </section>
 
@@ -334,15 +359,15 @@
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
-            <form>
+            <form id="add-form" @submit.prevent="addTaskBl">
               <div class="modal-body">
                 <div class="mb-3">
                   <label for="add-title" class="form-label">Title</label>
-                  <input type="text" class="form-control" id="add-title">
+                  <input type="text" class="form-control" id="add-title" v-model="title">
                 </div>
                 <div class="mb-3">
                   <label for="add-desc" class="form-label">Description</label>
-                  <textarea class="form-control" id="add-desc" cols="30" rows="8"></textarea>
+                  <textarea class="form-control" id="add-desc" cols="30" rows="8" v-model="description"></textarea>
                 </div>
               </div>
               <div class="modal-footer">
