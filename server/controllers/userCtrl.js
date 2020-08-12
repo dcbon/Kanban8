@@ -76,7 +76,7 @@ class UserCtrl {
           email: data.email
         }
         const token = generateToken(payload)
-        res.status(200).json({ token })
+        res.status(200).json({ access_token: token })
       })
       .catch(err => {
         console.log(err, '>>>>>>>>login google user');

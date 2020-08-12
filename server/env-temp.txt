@@ -1,0 +1,2 @@
+SECRET=
+CLIENT_ID=42747508098-bq2vi9qvikaqiqjdd6pl0qjouh1ctkek.apps.googleusercontent.com
