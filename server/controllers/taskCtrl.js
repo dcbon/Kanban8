@@ -1,4 +1,4 @@
-const { Task } = require('../models')
+const { Task, User } = require('../models')
 
 class TaskCtrl {
   static async create(req,res, next) {
@@ -20,8 +20,8 @@ class TaskCtrl {
   static async read(req,res, next) {
     try {
       const data = await Task.findAll({
-        where: { 
-          UserId: req.userData.id 
+        include: {
+          model: User
         }
       })
       res.status(200).json({ tasks: data })

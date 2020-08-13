@@ -41,6 +41,48 @@ small a:hover {
   box-shadow: none;
 }
 
+.btn-org {
+  background-color: #ff847c;
+}
+
+.btn-org:hover {
+  background-color: #db5b52;
+}
+
+.btn-org:active {
+  position: relative;
+  top: 7px;
+  box-shadow: none;
+}
+
+.btn-crm {
+  background-color: #feceab;
+}
+
+.btn-crm:hover {
+  background-color: #e79e6a;
+}
+
+.btn-crm:active {
+  position: relative;
+  top: 7px;
+  box-shadow: none;
+}
+
+.btn-grn {
+  background-color: #99b898;
+}
+
+.btn-grn:hover {
+  background-color: #72ac71;
+}
+
+.btn-grn:active {
+  position: relative;
+  top: 7px;
+  box-shadow: none;
+}
+
 .text-c-1 {
   color: #2a363b;
 }
