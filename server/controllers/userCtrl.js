@@ -66,17 +66,19 @@ class UserCtrl {
         else {
           return User.create({
             email: email,
-            password: 'secretpassword'
+            password: 'password'
           })
         }
       })
       .then (data => {
+        // console.log(data, '+++++++++data create');
         let payload = {
-          id: data.id,
-          email: data.email
+          id: data.dataValues.id,
+          email: data.dataValues.email
         }
+        // console.log(payload, '+++++++data payload create glogin');
         const token = generateToken(payload)
-        res.status(200).json({ access_token: token })
+        res.status(200).json({ token: token })
       })
       .catch(err => {
         console.log(err, '>>>>>>>>login google user');
