@@ -4,12 +4,11 @@
       <div class="dropdown">
         <a class="bg-custom fas fa-ellipsis-v float-right btn" role="button" id="menu" data-toggle="dropdown" aria-expanded="false"></a>
         <ul class="dropdown-menu" aria-labelledby="menu">
-          <li><a class="dropdown-item" href="#" @click.prevent="editTask(`${task.id}`)">
-            <span 
-              class="fas fa-edit mr-2" 
+          <li><a class="dropdown-item" href="#" 
+              @click.prevent="editTask(`${task.id}`)"
               data-toggle="modal" 
-              data-target="#editModal"
-              ></span>Edit
+              data-target="#editModal">
+            <span class="fas fa-edit mr-2" ></span>Edit
           </a></li>
           <li><a class="dropdown-item" href="#" @click.prevent="deleteTask(`${task.id}`)"><span class="fas fa-trash mr-2"></span>Remove</a></li>
         </ul>

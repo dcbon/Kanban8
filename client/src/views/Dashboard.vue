@@ -5,7 +5,7 @@
         <div class="text-c-1">
           <h1 class="p-3"><b>Kanban Board</b>
             <span class="float-right">
-              <button class="btn btn-red text-light" type="submit" @click="logout">Sign Out</button>
+              <button class="btn btn-red text-light" type="submit" @click.prevent="logout" >Sign Out</button>
             </span>
           </h1>
           <h5 class="border-btm p-3">August 2020</h5>
@@ -23,12 +23,20 @@
 </template>
 
 <script>
+import GoogleLogin from 'vue-google-login'
 import Categories from '../components/Categories'
 export default {
   name: 'Dashboard',
+  data() {
+    return {
+      params: {
+        client_id: "42747508098-bq2vi9qvikaqiqjdd6pl0qjouh1ctkek.apps.googleusercontent.com"
+      }
+    }
+  },
   props: ['tasks', 'categoriesData'],
   components: {
-    Categories
+    Categories, GoogleLogin
   },
   methods: {
     logout() {

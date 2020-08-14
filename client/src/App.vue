@@ -1,6 +1,14 @@
 <template>
   <div>
 
+    <div 
+      v-if="(errs)" 
+      class="alert alert-danger" 
+      role="alert"
+    >
+      {{ errMsg }}
+    </div>
+
     <Register 
       v-if="page === 'register'"
       @register-submited="register"
@@ -11,6 +19,7 @@
       v-else-if="page === 'login'"
       @login-submited="login"
       @change-page="changePage"
+      @glogin="glogin"
     ></Login>
 
     <Dashboard 
@@ -19,6 +28,7 @@
       @delete-task="deleteTask"
       @edit-data="edited"
       @type="type"
+      @dragged="dragged"
       :tasks="tasks"
       :categoriesData="categoriesData"
     ></Dashboard>
@@ -34,6 +44,7 @@
     <editTask
       :editData="editData"
       :category="category"
+      :code="code"
       @edit-task="editTask"
     ></editTask>
 
@@ -58,6 +69,8 @@ export default {
       editedId: '',
       category: '',
       code: '',
+      errs: false,
+      errMsg: '',
       categoriesData: [
         {
           title: 'Backlog',
@@ -123,10 +136,29 @@ export default {
         })
         .catch(err => {
           console.log(err, '+++++ error login');
+          this.errMsg = err.response.data.msg.toString()
+          this.errs = true
+        })
+    },
+    glogin(data) {
+      axios({
+        url: '/users/glogin',
+        method: 'post',
+        data: {
+          id_token: data.id_token 
+        }
+      })
+        .then(({ data }) => {
+          // console.log(data, '+++++ data login google');
+          localStorage.setItem('access_token', data.token)
+          this.checkAuth()
+        })
+        .catch(err => {
+          console.log(err, '+++++ error login google');
         })
     },
     register(payload) {
-      console.log(payload, '+++++++++++++payload');
+      // console.log(payload, '+++++++++++++payload');
       axios({
         url: '/users/register',
         method: 'post',
@@ -136,11 +168,12 @@ export default {
         }
       })
         .then(({ data }) => {
-          console.log(data, '+++++ data register');
+          // console.log(data, '+++++ data register');
           this.page = 'login'
         })
         .catch(err => {
-          console.log(err, '+++++ error register');
+          this.errMsg = err.response.data.msg.toString()
+          this.errs = true
         })
     },
     logout() {
@@ -161,6 +194,8 @@ export default {
         })
         .catch(err => {
           console.log(err, '+++++ error fetch');
+          this.errMsg = err.response.data.msg.toString()
+          this.errs = true
         })
 
     },
@@ -182,12 +217,16 @@ export default {
           this.title = ''
           this.description = ''
           this.checkAuth()
+          $('#addModal').modal('hide')
         })
         .catch(err => {
           console.log(err);
+          this.errMsg = err.response.data.msg.toString()
+          this.errs = true
         })
     },
     editTask(data) {
+      console.log(data, '>>>>>>>>>>>>dari parent');
       axios({
         url: `/tasks/${this.editedId}`,
         method: 'put',
@@ -205,9 +244,12 @@ export default {
           this.title = ''
           this.description = ''
           this.checkAuth()
+          $('#editModal').modal('hide')
         })
         .catch(err => {
           console.log(err);
+          this.errMsg = err.response.data.msg.toString()
+          this.errs = true
         })
     },
     edited(id) {
@@ -231,6 +273,28 @@ export default {
         })
         .catch(err => {
           console.log(err, '+++++ error delete');
+          this.errMsg = err.response.data.msg.toString()
+          this.errs = true
+        })
+    },
+    dragged(data) {
+      axios({
+        url: `/tasks/${data.id}`,
+        method: 'put',
+        data: {
+          title: data.title,
+          description: data.description,
+          category: data.category
+        },
+        headers: {
+          access_token: localStorage.access_token
+        }
+      })
+        .then(data => {
+          this.checkAuth()
+        })
+        .catch(err => {
+          console.log(err);
         })
     }
   },

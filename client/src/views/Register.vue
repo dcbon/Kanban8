@@ -32,7 +32,7 @@
                   >
                 </div>
                 <button type="submit" class="btn btn-red btn-block mb-1 text-light">Sign Up</button>
-                <small id="emailHelp" class="form-text text-muted">Already have an account? <a href="" @click.prevent="changePage">Login here.</a></small>
+                <small id="emailHelp" class="form-text text-muted">Already have an account? <a href="" class="txt-red" @click.prevent="changePage">Login here.</a></small>
               </form>
             </div>
           </div>

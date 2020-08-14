@@ -33,7 +33,15 @@
                 </div>
                 <button type="submit" class="btn btn-red btn-block mb-1 text-light">Sign In</button>
               </form>
-              <div class="g-signin2" data-onsuccess="onSignIn" data-width="287" data-height="38" data-longtitle="true"></div>
+              <GoogleLogin 
+                :params="params"
+                :onSuccess="onSuccess" 
+                :onFailure="onFailure"
+                data-longtitle="true"
+                class="btn btn-red btn-block mb-1 text-light"
+              >
+                Sign in with Google <span class="fab fa-google"></span>
+              </GoogleLogin>
               <small id="emailHelp" class="form-text text-muted">Didn't have an account? <a class="txt-red" @click.prevent="changePage">Register here.</a></small>
             </div>
           </div>
@@ -43,12 +51,24 @@
 </template>
 
 <script>
+import GoogleLogin from 'vue-google-login';
 export default {
   name: 'Login',
+  components: {
+    GoogleLogin
+  },
   data() {
     return {
       email: '',
-      password: ''
+      password: '',
+      params: {
+        client_id: "42747508098-bq2vi9qvikaqiqjdd6pl0qjouh1ctkek.apps.googleusercontent.com"
+      },
+      renderParams: {
+        width: 287,
+        height: 38,
+        longtitle: true
+      }
     }
   },
   methods: {
@@ -62,6 +82,17 @@ export default {
     changePage() {
       let page = 'register'
       this.$emit('change-page', page)
+    },
+    onSuccess(googleUser) {
+      let id_token = googleUser.getAuthResponse().id_token;
+      let data = {
+        'id_token': id_token
+      }
+      // console.log(data, '+++++++data dari login page');
+      this.$emit('glogin', data)
+    },
+    onFailure() {
+      console.log('error sign in with google');
     }
   }
 }
