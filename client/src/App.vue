@@ -62,7 +62,7 @@ export default {
       editedId: '',
       category: '',
       code: '',
-      user: localStorage.user,
+      user: '',
       errMsg: '',
       categoriesData: [
         {
@@ -114,7 +114,8 @@ export default {
     },
     login(payload) {
       console.log(payload, '+++++++++++++payload');
-      localStorage.setItem('user', payload.email)
+      this.user = payload.email
+      // localStorage.setItem('user', payload.email)
 
       axios({
         url: '/users/login',
@@ -127,7 +128,7 @@ export default {
         .then(({ data }) => {
           console.log(data, '+++++ data login');
           localStorage.setItem('access_token', data.token)
-          swal("Signed In", `Welcome back ${localStorage.user}`, "success");
+          swal("Signed In", `Welcome back ${this.user}`, "success");
           this.checkAuth()
         })
         .catch(err => {
@@ -137,7 +138,8 @@ export default {
         })
     },
     glogin(data) {
-      localStorage.setItem('user', data.email)
+      this.user = data.email
+      // localStorage.setItem('user', data.email)
       axios({
         url: '/users/glogin',
         method: 'post',
@@ -148,7 +150,7 @@ export default {
         .then(({ data }) => {
           console.log(data, '+++++ data login google');
           localStorage.setItem('access_token', data.token)
-          swal("Signed In", `Welcome back ${localStorage.user}`, "success");
+          swal("Signed In", `Welcome back ${this.user}`, "success");
           this.checkAuth()
         })
         .catch(err => {
