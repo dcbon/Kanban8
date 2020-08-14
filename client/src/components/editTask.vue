@@ -16,6 +16,16 @@
                 <input type="text" class="form-control" id="edit-title" v-model="title">
               </div>
               <div class="mb-3">
+                <label for="edit-category" class="form-label">Category</label>
+                <select class="custom-select form-control" id="edit-category" v-model="category">
+                  <option selected disabled>Choose</option>
+                  <option>Backlog</option>
+                  <option>Todo</option>
+                  <option>Doing</option>
+                  <option>Done</option>
+                </select>
+              </div>
+              <div class="mb-3">
                 <label for="edit-desc" class="form-label">Description</label>
                 <textarea class="form-control" id="edit-desc" cols="30" rows="8" v-model="description"></textarea>
               </div>
@@ -37,16 +47,17 @@ export default {
   data() {
     return {
       title: '',
+      category: '',
       description: ''
     }
   },
-  props: ['editData', 'category', 'code'],
+  props: ['editData', 'code'],
   methods: {
     editTask() {
       let data = {
         title: this.title,
         description: this.description,
-        category: this.editData.category
+        category: this.category
       }
       console.log(data);
       this.$emit('edit-task', data)
@@ -55,6 +66,7 @@ export default {
   watch: {
     editData() {
         this.title = this.editData.title
+        this.category = this.editData.category
         this.description = this.editData.description
     }
   }

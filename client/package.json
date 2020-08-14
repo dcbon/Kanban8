@@ -11,6 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "axios": "^0.19.2",
+    "sweetalert": "^2.1.2",
     "vue": "^2.6.11",
     "vue-google-login": "^2.0.5",
     "vue-hot-reload-api": "^2.3.4",

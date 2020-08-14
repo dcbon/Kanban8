@@ -6,7 +6,7 @@ async function authorization(req, res, next) {
     const task = await Task.findByPk(id)
     if (!task) throw { msg: 'Task not found', status: 404 }
     else if (req.userData.id == task.UserId) next()
-    else throw { msg: 'unauthorized access', status: 401 }
+    else throw { msg: 'Unauthorized Access', status: 401 }
   }
   catch(err) {
     console.log(err, '>>>>>>>> author');

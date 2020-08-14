@@ -8,7 +8,12 @@
               <button class="btn btn-red text-light" type="submit" @click.prevent="logout" >Sign Out</button>
             </span>
           </h1>
-          <h5 class="border-btm p-3">August 2020</h5>
+          <h4 class="border-btm p-3">August 2020
+            <span class="float-right">
+              {{ user }}
+              <img class="img-fluid avt" :src="`https://avatars.dicebear.com/api/human/${user.split('@')[0]}.svg`" alt="">
+            </span>
+          </h4>
         </div>
         <!-- category -->
         <Categories
@@ -34,7 +39,7 @@ export default {
       }
     }
   },
-  props: ['tasks', 'categoriesData'],
+  props: ['tasks', 'categoriesData', 'user'],
   components: {
     Categories, GoogleLogin
   },

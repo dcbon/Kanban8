@@ -24,7 +24,7 @@ function errHandler(err, req, res, next) {
       statusCode = 400
       break;
     case 'JsonWebTokenError':
-      msg.push(`Unauthorized access`)
+      msg.push(`Unauthorized Access`)
       statusCode = 401
       break;
     default:

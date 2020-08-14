@@ -1,14 +1,6 @@
 <template>
   <div>
 
-    <div 
-      v-if="(errs)" 
-      class="alert alert-danger" 
-      role="alert"
-    >
-      {{ errMsg }}
-    </div>
-
     <Register 
       v-if="page === 'register'"
       @register-submited="register"
@@ -31,6 +23,7 @@
       @dragged="dragged"
       :tasks="tasks"
       :categoriesData="categoriesData"
+      :user="user"
     ></Dashboard>
 
     <!-- add task -->
@@ -43,7 +36,6 @@
     <!-- edit task -->
     <editTask
       :editData="editData"
-      :category="category"
       :code="code"
       @edit-task="editTask"
     ></editTask>
@@ -52,6 +44,7 @@
 </template>
 
 <script>
+import swal from 'sweetalert'
 import axios from './config/axios'
 import Register from './views/Register'
 import Login from './views/Login'
@@ -69,7 +62,7 @@ export default {
       editedId: '',
       category: '',
       code: '',
-      errs: false,
+      user: '' || localStorage.user,
       errMsg: '',
       categoriesData: [
         {
@@ -121,6 +114,9 @@ export default {
     },
     login(payload) {
       console.log(payload, '+++++++++++++payload');
+      this.user = payload.email
+      localStorage.setItem('user', this.user)
+
       axios({
         url: '/users/login',
         method: 'post',
@@ -137,7 +133,7 @@ export default {
         .catch(err => {
           console.log(err, '+++++ error login');
           this.errMsg = err.response.data.msg.toString()
-          this.errs = true
+          swal("Something is wrong..", this.errMsg, "warning")
         })
     },
     glogin(data) {
@@ -149,12 +145,13 @@ export default {
         }
       })
         .then(({ data }) => {
-          // console.log(data, '+++++ data login google');
+          console.log(data, '+++++ data login google');
           localStorage.setItem('access_token', data.token)
           this.checkAuth()
         })
         .catch(err => {
           console.log(err, '+++++ error login google');
+          swal("Something is wrong..", this.errMsg, "warning")
         })
     },
     register(payload) {
@@ -173,7 +170,7 @@ export default {
         })
         .catch(err => {
           this.errMsg = err.response.data.msg.toString()
-          this.errs = true
+          swal("Something is wrong..", this.errMsg, "warning")
         })
     },
     logout() {
@@ -195,7 +192,7 @@ export default {
         .catch(err => {
           console.log(err, '+++++ error fetch');
           this.errMsg = err.response.data.msg.toString()
-          this.errs = true
+          swal("Something is wrong..", this.errMsg, "warning")
         })
 
     },
@@ -222,7 +219,7 @@ export default {
         .catch(err => {
           console.log(err);
           this.errMsg = err.response.data.msg.toString()
-          this.errs = true
+          swal("Something is wrong..", this.errMsg, "warning")
         })
     },
     editTask(data) {
@@ -249,7 +246,7 @@ export default {
         .catch(err => {
           console.log(err);
           this.errMsg = err.response.data.msg.toString()
-          this.errs = true
+          swal("Error", this.errMsg, "error")
         })
     },
     edited(id) {
@@ -258,7 +255,12 @@ export default {
           this.editData = element
           this.editedId = id
         }
-      });
+      })
+      this.categoriesData.forEach(element => {
+        if (element.title == this.editData.category) {
+          this.code = element.code
+        }
+      })
     },
     deleteTask(id) {
       axios({
@@ -274,7 +276,7 @@ export default {
         .catch(err => {
           console.log(err, '+++++ error delete');
           this.errMsg = err.response.data.msg.toString()
-          this.errs = true
+          swal("Error", this.errMsg, "error")
         })
     },
     dragged(data) {
@@ -295,6 +297,7 @@ export default {
         })
         .catch(err => {
           console.log(err);
+          swal("Unauthorized Access", "You can't move other user's card", "error")
         })
     }
   },
