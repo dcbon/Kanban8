@@ -84,11 +84,13 @@ export default {
       this.$emit('change-page', page)
     },
     onSuccess(googleUser) {
+      let profile = googleUser.getBasicProfile()
       let id_token = googleUser.getAuthResponse().id_token;
       let data = {
-        'id_token': id_token
+        'id_token': id_token,
+        'email': profile.getEmail()
       }
-      // console.log(data, '+++++++data dari login page');
+      console.log(data, '+++++++data dari login page');
       this.$emit('glogin', data)
     },
     onFailure() {

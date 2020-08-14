@@ -11,7 +11,9 @@
           <h4 class="border-btm p-3">August 2020
             <span class="float-right">
               {{ user }}
-              <img class="img-fluid avt" :src="`https://avatars.dicebear.com/api/human/${user.split('@')[0]}.svg`" alt="">
+              <img class="img-fluid avt" 
+              :src="`https://avatars.dicebear.com/api/human/${user.split('@')[0] || 'user'}.svg`" 
+              alt="">
             </span>
           </h4>
         </div>
