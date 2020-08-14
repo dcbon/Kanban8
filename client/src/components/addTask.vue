@@ -49,6 +49,8 @@ export default {
         category: this.category
       }
       this.$emit('add-task', data)
+      this.title = ''
+      this.description = ''
     }
   }
 }
