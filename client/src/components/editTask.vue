@@ -59,7 +59,7 @@ export default {
         description: this.description,
         category: this.category
       }
-      console.log(data);
+      // console.log(data);
       this.$emit('edit-task', data)
     }
   },

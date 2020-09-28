@@ -90,11 +90,11 @@ export default {
         'id_token': id_token,
         'email': profile.getEmail()
       }
-      console.log(data, '+++++++data dari login page');
+      // console.log(data, '+++++++data dari login page');
       this.$emit('glogin', data)
     },
     onFailure() {
-      console.log('error sign in with google');
+      console.error('error sign in with google');
     }
   }
 }

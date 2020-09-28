@@ -113,7 +113,6 @@ export default {
       });
     },
     login(payload) {
-      console.log(payload, '+++++++++++++payload');
       this.user = payload.email
       // localStorage.setItem('user', payload.email)
 
@@ -126,13 +125,13 @@ export default {
         }
       })
         .then(({ data }) => {
-          console.log(data, '+++++ data login');
+          // console.log(data, '+++++ data login');
           localStorage.setItem('access_token', data.token)
           swal("Signed In", `Welcome back ${this.user}`, "success");
           this.checkAuth()
         })
         .catch(err => {
-          console.log(err, '+++++ error login');
+          // console.log(err, '+++++ error login');
           this.errMsg = err.response.data.msg.toString()
           swal("Something is wrong..", this.errMsg, "warning")
         })
@@ -148,13 +147,13 @@ export default {
         }
       })
         .then(({ data }) => {
-          console.log(data, '+++++ data login google');
+          // console.log(data, '+++++ data login google');
           localStorage.setItem('access_token', data.token)
           swal("Signed In", `Welcome back ${this.user}`, "success");
           this.checkAuth()
         })
         .catch(err => {
-          console.log(err, '+++++ error login google');
+          // console.log(err, '+++++ error login google');
           swal("Something is wrong..", this.errMsg, "warning")
         })
     },
@@ -193,7 +192,7 @@ export default {
           this.tasks = data.tasks
         })
         .catch(err => {
-          console.log(err, '+++++ error fetch');
+          // console.log(err, '+++++ error fetch');
           this.errMsg = err.response.data.msg.toString()
           swal("Something is wrong..", this.errMsg, "warning")
         })
@@ -213,20 +212,20 @@ export default {
         }
       })
         .then(data => {
-          console.log(data);
+          // console.log(data);
           this.title = ''
           this.description = ''
           this.checkAuth()
           $('#addModal').modal('hide')
         })
         .catch(err => {
-          console.log(err);
+          // console.log(err);
           this.errMsg = err.response.data.msg.toString()
           swal("Something is wrong..", this.errMsg, "warning")
         })
     },
     editTask(data) {
-      console.log(data, '>>>>>>>>>>>>dari parent');
+      // console.log(data, '>>>>>>>>>>>>dari parent');
       axios({
         url: `/tasks/${this.editedId}`,
         method: 'put',
@@ -240,14 +239,14 @@ export default {
         }
       })
         .then(data => {
-          console.log(data);
+          // console.log(data);
           this.title = ''
           this.description = ''
           this.checkAuth()
           $('#editModal').modal('hide')
         })
         .catch(err => {
-          console.log(err);
+          // console.log(err);
           this.errMsg = err.response.data.msg.toString()
           swal("Error", this.errMsg, "error")
         })
@@ -277,7 +276,7 @@ export default {
           this.checkAuth()
         })
         .catch(err => {
-          console.log(err, '+++++ error delete');
+          // console.log(err, '+++++ error delete');
           this.errMsg = err.response.data.msg.toString()
           swal("Error", this.errMsg, "error")
         })
@@ -299,7 +298,7 @@ export default {
           this.checkAuth()
         })
         .catch(err => {
-          console.log(err);
+          // console.log(err);
           swal("Unauthorized Access", "You can't move other user's card", "error")
         })
     }
