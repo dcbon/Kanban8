@@ -217,6 +217,7 @@ export default {
           this.description = ''
           this.checkAuth()
           $('#addModal').modal('hide')
+          swal("Added", "Your task has been added", "success");
         })
         .catch(err => {
           // console.log(err);
@@ -244,6 +245,7 @@ export default {
           this.description = ''
           this.checkAuth()
           $('#editModal').modal('hide')
+          swal("Updated", "Your task has been updated", "success");
         })
         .catch(err => {
           // console.log(err);
@@ -274,6 +276,7 @@ export default {
       })
         .then(() => {
           this.checkAuth()
+          swal("Deleted", "Your task has been deleted", "success");
         })
         .catch(err => {
           // console.log(err, '+++++ error delete');

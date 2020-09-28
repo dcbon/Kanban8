@@ -27,12 +27,24 @@
 </template>
 
 <script>
+import swal from 'sweetalert'
 export default {
   name: 'TaskList',
   props: ['task', 'category'],
   methods: {
     deleteTask(id) {
-      this.$emit('delete-task', id)
+      swal({
+        title: "Delete this task?",
+        text: "Once deleted, you will not be able to recover it",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+      })
+      .then((willDelete) => {
+        if (willDelete) {
+          this.$emit('delete-task', id)
+        } 
+      });
     },
     editTask(id) {
       this.$emit('edit-data', id)
