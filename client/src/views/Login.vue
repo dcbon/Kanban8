@@ -42,7 +42,7 @@
               >
                 Sign in with Google <span class="fab fa-google"></span>
               </GoogleLogin>
-              <small id="emailHelp" class="form-text text-muted">Didn't have an account? <a class="txt-red" @click.prevent="changePage">Register here.</a></small>
+              <small id="emailHelp" class="form-text text-muted">Don't have an account? <a class="txt-red" @click.prevent="changePage">Register here.</a></small>
             </div>
           </div>
         </div>

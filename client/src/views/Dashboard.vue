@@ -8,7 +8,7 @@
               <button class="btn btn-red text-light" type="submit" @click.prevent="logout" >Sign Out</button>
             </span>
           </h1>
-          <h4 class="border-btm p-3">August 2020
+          <h4 class="border-btm p-3">{{ currentDate.slice(0, 3) }}, {{ currentDate.slice(3, 15) }}
             <span class="float-right">
               {{ user }}
               <img class="img-fluid avt" 
@@ -48,6 +48,12 @@ export default {
   methods: {
     logout() {
       this.$emit('logout')
+    }
+  },
+  computed: {
+    currentDate() {
+      let date = new Date()
+      return date.toDateString()
     }
   }
 }
