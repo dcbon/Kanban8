@@ -1,5 +1,5 @@
 <template>
-  <div class="card mb-3 shadow m-1">
+  <div class="card mb-3 shadow m-1" role="button">
     <div class="card-body">
       <div class="dropdown">
         <a class="bg-custom fas fa-ellipsis-v float-right btn" role="button" id="menu" data-toggle="dropdown" aria-expanded="false"></a>

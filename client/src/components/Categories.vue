@@ -1,5 +1,5 @@
 <template>
-  <div class="col-3">
+  <div class="col-lg-3 col-md-12">
     <div class="justify-content-between">
       <h5 
         class="badge bg-secondary"

@@ -2,8 +2,8 @@
     <!-- register -->
     <section class="container" id="register-page">
       <div class="row justify-content-center">
-        <div class="col-4 justify-content-around">
-          <div class="card p-3 mt-4 shadow">
+        <div class="col-lg-4 col-md-6 col-sm-8 justify-content-around">
+          <div class="card p-3 my-2 shadow">
             <div class="card-body">
               <img src="../assets/people.svg" alt="" class="card-img-top">
               <h2 class="card-title text-center txt-red p-2">KANBAN8

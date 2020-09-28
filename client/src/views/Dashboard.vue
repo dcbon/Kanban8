@@ -3,7 +3,7 @@
     <section class="container" id="dashboard">
       <div class="row mt-5">
         <div class="text-c-1">
-          <h1 class="p-3"><b>Kanban Board</b>
+          <h1 class="p-3"><b>Kanban8</b>
             <span class="float-right">
               <button class="btn btn-red text-light" type="submit" @click.prevent="logout" >Sign Out</button>
             </span>
